@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html;charset=UTF-8"  import="java.util.*" pageEncoding="UTF-8"%>
+@ page language="java" contentType="text/html;charset=UTF-8"  import="java.util.*" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
@@ -29,6 +29,7 @@
             background: url("./images/lufei.png");
             background-repeat: no-repeat;
             background-size: cover;
+
         }
         100%{
             background: url("./images/mingren.png");
