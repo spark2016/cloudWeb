@@ -1,4 +1,4 @@
-package com.spark.sparkPro;
+package com.spark.sparkDemo;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
