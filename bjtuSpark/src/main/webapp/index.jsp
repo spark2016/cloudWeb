@@ -154,11 +154,6 @@
             <div class="text_content"></div>
         </div>
     </div>
-    <%! //String baseInfo;%>
-	<%
-      String baseInfo=(String)request.getAttribute( "baseInfo");
-	  //System.out.println("baseInfo is in the jsp" + baseInfo);
-    %>
     <script src="./js/jquery-2.2.3.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script type="text/javascript">
