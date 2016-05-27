@@ -14,7 +14,7 @@
 	    <param-value>/WEB-INF/spring-servlet.xml</param-value>
 	</context-param>  
   
-    <servlet>  
+    <!-- <servlet>  
         <servlet-name>spring</servlet-name>  
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>  
         <load-on-startup>1</load-on-startup>  
@@ -23,7 +23,7 @@
     <servlet-mapping>  
         <servlet-name>spring</servlet-name>  
         <url-pattern>*.do</url-pattern>  
-    </servlet-mapping>  
+    </servlet-mapping>   -->
 
     <welcome-file-list>  
             <welcome-file>index.jsp</welcome-file>  

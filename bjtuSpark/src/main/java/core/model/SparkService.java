@@ -11,12 +11,12 @@ import core.tools.SshTool;
 @Service
 public class SparkService {
 
-	@Autowired
-	private SshTool sshTool;
+//	@Autowired
+//	private SshTool sshTool;
 	
 	public String getSparkInfo(String userId) {
 		//处理真正的数据，获取spark返回数据
-		sshTool.sshSession();
+//		sshTool.sshSession();
         return "json info";
 	}
 	
