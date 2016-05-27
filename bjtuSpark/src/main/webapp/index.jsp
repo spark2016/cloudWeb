@@ -184,7 +184,7 @@
          boolean值指定是否异步，true为使用，false为不使用。
          我们使用异步才能体会到Ajax强大的异步功能。
          */
-        req.open("POST", "SparkServlet", true);
+        req.open("POST", "SparkServlet.do", true);
         req.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
         //onreadystatechange属性存有处理服务器响应的函数,有5个取值分别代表不同状态
         req.onreadystatechange = callback;

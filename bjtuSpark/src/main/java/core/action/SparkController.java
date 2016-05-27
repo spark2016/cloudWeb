@@ -22,7 +22,7 @@ import core.model.SparkService;
 public class SparkController {
 	
 	@Autowired
-	SparkService service;
+	private SparkService service;
 	
     /**
      * @user lyahb
@@ -32,6 +32,7 @@ public class SparkController {
     public void index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         //对应的是WebContent目录下的WEB-INF目录下的jsp目录下的demo下的index.jsp
         //请查看配置文件springMvc3-servlet.xml仔细体会一下
+    	System.out.println("controller");
     	String userId = request.getParameter("userId");
         //TODO
 		String userInfo = service.getSparkInfo(userId);

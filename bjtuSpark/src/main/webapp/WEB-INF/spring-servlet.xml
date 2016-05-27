@@ -30,7 +30,7 @@
        <property name="suffix" value=".jsp" />                <!-- 模板文件的后缀-->  
     </bean>  
     
-    <!-- <bean id="sshTool" class="core.tools.SshTool" init-method="startConnection" destroy-method="stopConnection">
-	</bean>  -->
+    <bean id="sshTool" class="core.tools.SshTool" init-method="startConnection" destroy-method="stopConnection">
+	</bean> 
       
 </beans>  

@@ -19,12 +19,12 @@ import com.sshtools.ssh.SshSession;
 
 public class SshTool {
 	
-//	private String hostname = "172.31.34.36";
-//	private String username = "spark";
-//	private String password = "123456";
-	private String hostname = "9.181.24.218";
-	private String username = "root";
-	private String password = "passw0rd";
+	private String hostname = "172.31.34.36";
+	private String username = "spark";
+	private String password = "123456";
+//	private String hostname = "9.181.24.218";
+//	private String username = "root";
+//	private String password = "passw0rd";
 	
 	private SshClient ssh;
 	
