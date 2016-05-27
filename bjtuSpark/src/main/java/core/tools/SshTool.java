@@ -28,19 +28,7 @@ public class SshTool {
 	
 	private SshClient ssh;
 	
-	private static class SshToolHolder {  
-		private static final SshTool INSTANCE = new SshTool();  
-	}
-	
-	private SshTool() {
-		sshConnection();
-	}
-	
-	public static final SshTool getInstance() {  
-		return SshToolHolder.INSTANCE;  
-	}  
-	
-	public void sshConnection() {
+	public void startConnection() {
 		final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	
 		try {
@@ -96,6 +84,10 @@ public class SshTool {
 		}
 	}
 	
+	public void stopConnection() {
+		ssh.disconnect();
+	}
+	
 	public void sshSession() {
 		try {
 			/**
@@ -146,4 +138,37 @@ public class SshTool {
 			t.printStackTrace();
 		}
 	}
+
+	public String getHostname() {
+		return hostname;
+	}
+
+	public void setHostname(String hostname) {
+		this.hostname = hostname;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public SshClient getSsh() {
+		return ssh;
+	}
+
+	public void setSsh(SshClient ssh) {
+		this.ssh = ssh;
+	}
+	
 }
