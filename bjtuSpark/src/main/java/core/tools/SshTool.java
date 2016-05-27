@@ -26,6 +26,20 @@ public class SshTool {
 	private String username = "root";
 	private String password = "passw0rd";
 	
+	private SshClient ssh;
+	
+	private static class SshToolHolder {  
+		private static final SshTool INSTANCE = new SshTool();  
+	}
+	
+	private SshTool() {
+		sshConnection();
+	}
+	
+	public static final SshTool getInstance() {  
+		return SshToolHolder.INSTANCE;  
+	}  
+	
 	public void sshConnection() {
 		final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	
@@ -63,7 +77,7 @@ public class SshTool {
 	
 			System.out.println("Creating SSH client");
 	
-			final SshClient ssh = con.connect(transport, username, true);
+			ssh = con.connect(transport, username, true);
 	
 			/**
 			 * Authenticate the user using password authentication
@@ -76,6 +90,14 @@ public class SshTool {
 			} while (ssh.authenticate(pwd) != SshAuthentication.COMPLETE
 					&& ssh.isConnected());
 	
+//			ssh.disconnect();
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+	}
+	
+	public void sshSession() {
+		try {
 			/**
 			 * Start a session and do basic IO
 			 */
@@ -120,11 +142,8 @@ public class SshTool {
 	
 				session.close();
 			}
-	
-			ssh.disconnect();
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
 	}
-
 }
