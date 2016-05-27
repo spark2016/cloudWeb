@@ -18,11 +18,19 @@ import com.sshtools.ssh.SshConnector;
 import com.sshtools.ssh.SshSession;
 
 public class SshTool {
+	
+//	private String hostname = "172.31.34.36";
+//	private String username = "spark";
+//	private String password = "123456";
+	private String hostname = "9.181.24.218";
+	private String username = "root";
+	private String password = "passw0rd";
+	
 	public void sshConnection() {
 		final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	
 		try {
-			String hostname = "172.31.34.36";
+			
 			System.out.println("Hostname: " + hostname);
 	
 			int idx = hostname.indexOf(':');
@@ -33,7 +41,6 @@ public class SshTool {
 	
 			}
 	
-			String username = "spark";
 			System.out.println("Username [Enter for "
 					+ System.getProperty("user.name") + "]: " + username);
 	
@@ -64,7 +71,7 @@ public class SshTool {
 			PasswordAuthentication pwd = new PasswordAuthentication();
 	
 			do {
-				pwd.setPassword("123456");
+				pwd.setPassword(password);
 				System.out.println("Password: " + pwd.toString());
 			} while (ssh.authenticate(pwd) != SshAuthentication.COMPLETE
 					&& ssh.isConnected());
