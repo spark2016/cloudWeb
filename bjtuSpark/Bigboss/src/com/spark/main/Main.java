@@ -4,8 +4,9 @@ import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.SparkConf;
+import org.codehaus.groovy.runtime.StringBufferWriter;
 
-import net.sf.json.JSONObject;
+//import net.sf.json.JSONObject;
 
 /**
  * Created by liuyifan on 16/5/23.
@@ -19,76 +20,79 @@ public class Main {
 
         String id = args[0];
 
-        JSONObject result = new JSONObject();
+        StringBuffer result = new StringBuffer();
 
-        result.put("id", id);
-        result.put("basic", basic(id));
-        result.put("professional", profession(id));
-        result.put("interest", interest(id));
-        result.put("social", network(id));
+        result.append("{\"id\": \"" + id + "\"");
+        result.append(", \"baseInfo\": " + basic(id));
+        result.append(", \"profession\": " + profession(id));
+        result.append(", \"interests\": " + interests(id));
+        result.append(", \"social\": " + social(id) + "}");
 
-        String res = result.toString();
-        System.out.println(res);
+        System.out.println(result.toString());
     }
 
     /**
-     * 根据id,获取basic information<TODO>
+     * 根据id,获取basic information
      * @param id
      * @return
      */
-    private static JSONObject basic(String id) {
-        JSONObject basicObj = new JSONObject();
+    private static String basic(String id) {
+        StringBuffer basic = new StringBuffer();
 
 //        SparkConf conf = new SparkConf();
 //        JavaSparkContext sc = new JavaSparkContext(conf);
 //        JavaRDD<String> base = sc.textFile("/");
 
-        String name = "Xiao Ming";
+        // do something in spark<TODO>
+        String name = "Skye";
         String sex = "f";
         String age = "20";
-        basicObj.put("name", name);
-        basicObj.put("sex", sex);
-        basicObj.put("age", age);
-        return basicObj;
+        basic.append("{\"name\": \"" + name + "\"");
+        basic.append(", \"sex\": \"" + sex + "\"");
+        basic.append(", \"age\": \"" + age + "\"}");
+        return basic.toString();
     }
 
     /**
-     * 根据id,获取professional information<TODO>
+     * 根据id,获取professional information
      * @param id
      * @return
      */
-    private static JSONObject profession(String id) {
-        JSONObject profObj = new JSONObject();
+    private static String profession(String id) {
+        StringBuffer prof = new StringBuffer();
+
+        // do something in spark<TODO>
         String job = "hunter";
         String habit = "eat";
-        profObj.put("job", job);
-        profObj.put("habit", habit);
-        return profObj;
+        prof.append("{\"job\": \"" + job + "\"");
+        prof.append(", \"habit\": \"" + habit + "\"}");
+        return prof.toString();
     }
 
     /**
-     * 根据id,获取interest information<TODO>
+     * 根据id,获取interest information
      * @param id
      * @return
      */
-    private static JSONObject interest(String id) {
-        JSONObject interestObj = new JSONObject();
-        String interests = "music,hiking...";
-        interestObj.put("interests", interests);
-        return interestObj;
+    private static String interests(String id) {
+        // do something in spark<TODO>
+        String interests = "hiking,something...";
+        return "\"" + interests +"\"";
     }
 
     /**
-     * 根据id,获取social network information<TODO>
+     * 根据id,获取social network information
      * @param id
      * @return
      */
-    private static JSONObject network(String id) {
-        JSONObject socialObj = new JSONObject();
+    private static String social(String id) {
+        StringBuffer social = new StringBuffer();
+
+        // do something in spark<TODO>
         String pageRank = "1.1";
         String group = "boss";
-        socialObj.put("pageRank", pageRank);
-        socialObj.put("group", group);
-        return socialObj;
+        social.append("{\"pagerank\": \"" + pageRank + "\"");
+        social.append(", \"group\": \"" + group + "\"}");
+        return social.toString();
     }
 }
