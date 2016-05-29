@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                       http://www.springframework.org/schema/context
+                       http://www.springframework.org/schema/context/spring-context-2.5.xsd
+                       http://www.springframework.org/schema/aop
+                       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+                       http://www.springframework.org/schema/tx
+                       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">  
+  
+  	<!-- Annotation Driver: 使用注释事务管理-->
+	<!-- 这里配置后将使用注释事务方式，不用再在这个XML文件中配置事务代理对象了 -->
+	<tx:annotation-driven transaction-manager="txManager"/>
+	
+	<!-- 这里配置后就不用再使用bean标签配置bean了 -->
+	<context:annotation-config></context:annotation-config>
+ 	
+    <!-- 对包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 稍后会创建该包：core.action -->      
+    <context:component-scan base-package="core.*"/>  
+  
+    <!-- 定义Spring MVC 的模板文件 -->  
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+       <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>     <!-- 支持JSTL -->  
+       <property name="prefix" value="/" />              <!-- 模板的路径 -->  
+       <property name="suffix" value=".jsp" />                <!-- 模板文件的后缀-->  
+    </bean>  
+    
+    <bean id="sshTool" class="core.tools.SshTool" init-method="startConnection" destroy-method="stopConnection">
+	</bean> 
+      
+</beans>  
