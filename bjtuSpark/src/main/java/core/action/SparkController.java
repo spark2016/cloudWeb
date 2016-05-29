@@ -32,17 +32,13 @@ public class SparkController {
     public void index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         //对应的是WebContent目录下的WEB-INF目录下的jsp目录下的demo下的index.jsp
         //请查看配置文件springMvc3-servlet.xml仔细体会一下
-    	System.out.println("controller");
     	String userId = request.getParameter("userId");
         //TODO
 		String userInfo = service.getSparkInfo(userId);
 //        System.out.println("debug +++");
-        JSONObject object = new JSONObject();
-        object.put("baseInfo",userInfo);
-        object.put("interests",userInfo);
-        object.put("profession",userInfo);
-        object.put("pagerank",userInfo);
+        JSONObject object = JSONObject.parseObject(userInfo);
 
+        response.setContentType("text/html;charset=UTF-8"); 
         PrintWriter out = response.getWriter();
 		out.write(object.toString());
         out.close();  

@@ -1,8 +1,10 @@
 package core.tools;
 
 import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.IOException;
 
 import javax.servlet.http.HttpServlet;
 import com.sshtools.logging.LoggerFactory;
@@ -88,56 +90,149 @@ public class SshTool {
 		ssh.disconnect();
 	}
 	
-	public void sshSession() {
+	public String sshSession(String userId) {
+		String resultStr = "";
 		try {
 			/**
 			 * Start a session and do basic IO
 			 */
 			if (ssh.isAuthenticated()) {
-	
-				// Some old SSH2 servers kill the connection after the first
+
+				// Some old SSH2 servers (Solaris) kill the connection after the
+				// first
 				// session has closed and there are no other sessions started;
 				// so to avoid this we create the first session and dont ever
 				// use it
-				final SshSession session = ssh.openSessionChannel();
-	
-				// Use the newly added PseudoTerminalModes class to
-				// turn off echo on the remote shell
-				PseudoTerminalModes pty = new PseudoTerminalModes(ssh);
-				pty.setTerminalMode(PseudoTerminalModes.ECHO, false);
-	
-				session.requestPseudoTerminal("vt100", 80, 24, 0, 0, pty);
-	
-				session.startShell();
-	
-				Thread t = new Thread() {
-					public void run() {
-						try {
-							int read;
-							while ((read = session.getInputStream().read()) > -1) {
-								System.out.write(read);
-								System.out.flush();
-							}
-						} catch (IOException ex) {
-							ex.printStackTrace();
+				SshSession s = ssh.openSessionChannel();
+				s.startShell();
+
+				ThreadPool pool = new ThreadPool();
+
+				System.out.println("Executing session ");
+				System.out.println(ssh.getChannelCount()
+						+ " channels currently open");
+				SshSession session = null;
+				try {
+					// 执行sh脚本
+					session = ssh.openSessionChannel();
+
+					if (session.requestPseudoTerminal("vt100", 80,
+							24, 0, 0)) {
+
+						session.executeCommand("/home/spark/project/test.sh " + userId);
+						InputStream in = session.getInputStream();
+
+						ByteArrayOutputStream out = new ByteArrayOutputStream();
+						int read;
+						while ((read = in.read()) > -1) {
+							if (read > 0)
+								out.write(read);
 						}
-					}
-				};
-	
-				t.start();
-				int read;
-				// byte[] buf = new byte[4096];
-				while ((read = System.in.read()) > -1) {
-					session.getOutputStream().write(read);
-	
+
+						synchronized (System.out) {
+							System.out.write(out.toByteArray());
+						}
+					} else
+						System.out
+								.println("Failed to allocate pseudo terminal");
+
+					// 读取dat文件
+					session.close();
+					session = ssh.openSessionChannel();
+					if (session.requestPseudoTerminal("vt100", 80,
+							24, 0, 0)) {
+
+						session.executeCommand("cat /home/spark/project/result.dat");
+						InputStream in = session.getInputStream();
+
+						ByteArrayOutputStream out = new ByteArrayOutputStream();
+						int read;
+						while ((read = in.read()) > -1) {
+							if (read > 0) {
+								out.write(read);
+							}
+						}
+
+						synchronized (System.out) {
+							System.out.write(out.toByteArray());
+							resultStr = new String(out.toByteArray());
+						}
+					} else
+						System.out
+								.println("Failed to allocate pseudo terminal");
+				} catch (Throwable t1) {
+					t1.printStackTrace();
+				} finally {
+					if (session != null)
+						session.close();
+					System.out.println("Completed session ");
 				}
-	
-				session.close();
+
 			}
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
+		
+		return resultStr;
 	}
+	
+	class ThreadPool {
+
+		Thread t[] = new Thread[5];
+
+		public synchronized void addOperation(Runnable r) {
+
+			int nextThread;
+			System.out.println("Adding new operation");
+			while ((nextThread = getNextThread()) == -1) {
+				try {
+					wait();
+				} catch (InterruptedException ex) {
+				}
+			}
+
+			start(r, nextThread);
+
+		}
+
+		public int getNextThread() {
+			synchronized (t) {
+				for (int i = 0; i < t.length; i++) {
+					if (t[i] == null) {
+						return i;
+					}
+				}
+			}
+			return -1;
+
+		}
+
+		public synchronized void release() {
+			notify();
+		}
+
+		public synchronized void start(final Runnable r, final int i) {
+			t[i] = new Thread() {
+				public void run() {
+
+					try {
+						r.run();
+					} catch (Exception ex) {
+					}
+
+					synchronized (t) {
+						t[i] = null;
+					}
+
+					release();
+				}
+
+			};
+
+			t[i].start();
+		}
+	}
+
 
 	public String getHostname() {
 		return hostname;
