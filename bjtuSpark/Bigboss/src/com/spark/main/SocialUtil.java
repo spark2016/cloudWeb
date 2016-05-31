@@ -15,7 +15,7 @@ public class SocialUtil {
         // do something in spark<TODO>
         String pageRank = "1.1";
         String group = "boss";
-        social.append("\"pagerank: " + pageRank + "\\n");
+        social.append("\"pagerank: " + pageRank + "<br/>");
         social.append(" group: " + group + "\"");
         return social.toString();
     }

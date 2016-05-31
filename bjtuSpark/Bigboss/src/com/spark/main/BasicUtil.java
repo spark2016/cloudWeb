@@ -26,8 +26,8 @@ public class BasicUtil {
         String name = "Skye";
         String sex = "f";
         String age = "20";
-        basic.append("\"name: " + name + "\\n");
-        basic.append(" sex: " + sex + "\\n");
+        basic.append("\"name: " + name + "<br/>");
+        basic.append(" sex: " + sex + "<br/>");
         basic.append(" age: " + age + "\"");
         return basic.toString();
     }

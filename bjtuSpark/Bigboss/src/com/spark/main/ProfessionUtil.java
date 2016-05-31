@@ -20,7 +20,7 @@ public class ProfessionUtil {
         // do something in spark<TODO>
         String job = "hunter";
         String habit = "eat";
-        prof.append("\"job: " + job + "\\n");
+        prof.append("\"job: " + job + "<br/>");
         prof.append(" habit: " + habit + "\"");
         return prof.toString();
     }
