@@ -17,18 +17,18 @@ public class BasicUtil {
     public static String basic(String id) {
         StringBuffer basic = new StringBuffer();
 
-        SparkConf conf = new SparkConf();
-        JavaSparkContext sc = new JavaSparkContext(conf);
-
-        sc.close();
+//        SparkConf conf = new SparkConf();
+//        JavaSparkContext sc = new JavaSparkContext(conf);
+//
+//        sc.close();
 
         // do something in spark<TODO>
         String name = "Skye";
         String sex = "f";
         String age = "20";
-        basic.append("{\"name\": \"" + name + "\"");
-        basic.append(", \"sex\": \"" + sex + "\"");
-        basic.append(", \"age\": \"" + age + "\"}");
+        basic.append("\"name: " + name + "\\n");
+        basic.append(" sex: " + sex + "\\n");
+        basic.append(" age: " + age + "\"");
         return basic.toString();
     }
 }

@@ -22,11 +22,10 @@ public class Main {
         result.append(", \"profession\": " + ProfessionUtil.profession(id));
         result.append(", \"interests\": " + InterestUtil.interests(id));
         result.append(", \"social\": " + SocialUtil.social(id) + "} \n");
-        result.append("line 2 \n");
 
         String res = result.toString();
 
-        System.out.println(res);
+        System.out.print(res);
         String path = "/home/spark/project/result.dat";
 //        String path = "/Users/liuyifan/Documents/result.dat";
 
