@@ -7,6 +7,5 @@
 	<classpathentry kind="lib" path="/Users/baiyilin/Downloads/nlp-lang-0.3.jar"/>
 	<classpathentry kind="lib" path="/Users/baiyilin/Downloads/tfidf_2.10-0.0.2.jar"/>
 	<classpathentry kind="lib" path="/usr/local/spark-1.5.1-bin-hadoop2.6/lib/spark-assembly-1.5.1-hadoop2.6.0.jar"/>
-	<classpathentry kind="lib" path="/Users/baiyilin/Downloads/安装包/fastjson-1.2.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
