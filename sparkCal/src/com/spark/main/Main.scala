@@ -14,7 +14,7 @@ object Main {
   def main(args: Array[String]) {
     //val userId = args(0)
     //设置运行环境
-    val conf = new SparkConf().setAppName("Interest")
+    val conf = new SparkConf().setAppName("Main")
     conf.setMaster("local")
     var sc = new SparkContext(conf)
     val userId = "1628951200"
@@ -52,7 +52,7 @@ object Main {
     //Calculate page rank and save the result to VertexRDD
     val ranks = graph.pageRank(0.1).vertices
     val result = ranks.filter(text=>(text.toString.contains(userId)))
-    val group = LabelPropagation.run(graph, 2)
+    val group = LabelPropagation.run(graph, 1)
     println(group)
     result.first()
   }
