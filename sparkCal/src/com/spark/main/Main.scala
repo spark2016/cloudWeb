@@ -1,14 +1,14 @@
 package com.spark.main
 
+import org.apache.spark.{SparkContext, SparkConf}
+import org.apache.spark.graphx._
+import org.apache.spark.rdd.RDD
+import org.apache.spark.graphx.lib.LabelPropagation
 import java.io._
 import java.util.Date
 import scala.io.Source
 import com.wanghuanming.tfidf._
 import org.apache.log4j.{Level, Logger}
-import org.apache.spark.{SparkContext, SparkConf}
-import org.apache.spark.graphx._
-import org.apache.spark.rdd.RDD
-import org.apache.spark.graphx.lib.LabelPropagation
 
 object Main {
   def main(args: Array[String]) {
@@ -38,8 +38,8 @@ object Main {
 
     println(result);
 
-//    val path = "/home/spark/project/result.dat"
-    val path = "/Users/lynn/Desktop/result.dat"
+    val path = "/home/spark/project/result.dat"
+//    val path = "/Users/lynn/Desktop/result.dat"
 
     val fos = new FileOutputStream(path);
     fos.write(result.getBytes);
