@@ -17,10 +17,10 @@ public class BasicUtil {
     public static String basic(String id) {
         StringBuffer basic = new StringBuffer();
 
-//        SparkConf conf = new SparkConf();
-//        JavaSparkContext sc = new JavaSparkContext(conf);
-//
-//        sc.close();
+        SparkConf conf = new SparkConf();
+        JavaSparkContext sc = new JavaSparkContext(conf);
+
+        sc.close();
 
         // do something in spark<TODO>
         String name = "Skye";

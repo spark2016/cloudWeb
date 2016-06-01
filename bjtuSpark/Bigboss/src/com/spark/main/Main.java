@@ -21,7 +21,7 @@ public class Main {
         result.append(", \"baseInfo\": " + BasicUtil.basic(id));
         result.append(", \"profession\": " + ProfessionUtil.profession(id));
         result.append(", \"interests\": " + InterestUtil.interests(id));
-        result.append(", \"social\": " + SocialUtil.social(id) + "} \n");
+        result.append(", \"pagerank\": " + SocialUtil.social(id) + "} \n");
 
         String res = result.toString();
 
