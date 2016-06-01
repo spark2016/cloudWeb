@@ -22,8 +22,8 @@ object Main {
 //	  val userId = args(0);
 	  
 	  
-    val conf = new SparkConf().setAppName("Main")
-    conf.setMaster("local")
+    val conf = new SparkConf().setAppName("sparkCal")
+//    conf.setMaster("local")
     var sc = new SparkContext(conf)
     val baseInfo = getBasic(userId,sc)
     val interest = getInterest(userId,sc)
