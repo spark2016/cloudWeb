@@ -1,4 +1,4 @@
-package com.spark.sparkDemo;
+package com.spark.profession;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
@@ -11,7 +11,10 @@ import scala.Tuple2;
 
 import java.util.Arrays;
 
-public class SparkMain {
+/**
+ * Created by liuyifan on 16/6/1.
+ */
+public class Profession {
     public static void main(String[] args) {
         SparkConf conf = new SparkConf();
         JavaSparkContext sc = new JavaSparkContext(conf);
@@ -37,7 +40,5 @@ public class SparkMain {
 
         //结果保存到hdfs中
         counts.saveAsTextFile("/output2");
-
     }
 }
-
