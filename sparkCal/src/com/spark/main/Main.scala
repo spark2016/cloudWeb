@@ -36,7 +36,7 @@ object Main {
     result += "\"baseInfo\": \"" + baseInfo + "\", ";
     result += "\"profession\": \"" + "test" + "\", ";
     result += "\"interests\": \"" + interest + "\", ";
-    result += "\"pagerank\": \"" + "test" + "\"}\n";
+    result += "\"pagerank\": \"" + socialInfo + "\"}\n";
 
     println(result);
 
