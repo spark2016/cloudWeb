@@ -29,7 +29,7 @@ object Main {
     var sc = new SparkContext(conf)
     val baseInfo = getBasic(userId,sc)
     val interest = getInterest(userId,sc)
-//    val socialInfo = getSocial(userId,sc)
+    val socialInfo = getSocial(userId,sc)
 
     var result : String = "";
     result += "{\"id\": \"" + userId + "\", ";
@@ -84,7 +84,8 @@ object Main {
     val ranks = graph.pageRank(0.1).vertices
     val result = ranks.filter(text=>(text.toString.contains(userId)))
     val group = LabelPropagation.run(graph, 1)
-    println(group)
+    println(group.vertices.first())
+    println(group.edges.first())
     result.first()
   }
 
