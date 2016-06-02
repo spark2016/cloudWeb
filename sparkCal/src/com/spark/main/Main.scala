@@ -12,17 +12,19 @@ import org.apache.log4j.{Level, Logger}
 
 object Main {
   def main(args: Array[String]) {
+    // 1. local
 //	  val userId = "1035748400";
-    val userId = args(0)
+    // 1. yarn
     //设置运行环境
 	  if (args.length == 0) {
 		  println("No params.");
 		  sys.exit(-1);
 	  }
-//	  val userId = args(0);
+	  val userId = args(0)
 	  
 	  
     val conf = new SparkConf().setAppName("sparkCal")
+    // 2. local
 //    conf.setMaster("local")
     var sc = new SparkContext(conf)
     val baseInfo = getBasic(userId,sc)
@@ -38,7 +40,9 @@ object Main {
 
     println(result);
 
+    // 3. yarn
     val path = "/home/spark/project/result.dat"
+    // 3. local
 //    val path = "/Users/lynn/Desktop/result.dat"
 
     val fos = new FileOutputStream(path);
@@ -49,6 +53,7 @@ object Main {
     sc.stop()
   }
   def getInterest(userId: String,sc: SparkContext)= {
+    // 4. yarn
     val articles: RDD[String] = sc.textFile("hdfs://spark1:9000/weibo/weibo.txt")
     
     val articles_filter =  articles.filter(a => (a.split('\t').length > 2 && a.split('\t')(1) == userId));
@@ -57,6 +62,7 @@ object Main {
     res
   }
   def getBasic(userId: String,sc: SparkContext)= {
+      // 5. yarn
        val articles: RDD[String] = sc.textFile("hdfs://spark1:9000/weibo/userprofile.txt")
        val articles_filter =  articles.filter(a => (a.split('\t').length > 2 && a.split('\t')(0) == userId));
        val res = articles_filter.collect().mkString
@@ -70,6 +76,7 @@ object Main {
        basicInfo
   }
   def getSocial(userId: String,sc: SparkContext) = {
+    // 6. yarn
     val relationFile = "hdfs://spark1:9000/weibo/relation.txt"
     //load graph
     val graph = GraphLoader.edgeListFile(sc, relationFile)
