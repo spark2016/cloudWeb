@@ -142,7 +142,7 @@ public class SshTool {
 					if (session.requestPseudoTerminal("vt100", 80,
 							24, 0, 0)) {
 
-						session.executeCommand("cat /home/spark/project/result.dat");
+						session.executeCommand("/home/spark/project/hadoop-2.7.1/bin/hdfs dfs -cat /weibo/result.dat/part-00000");
 						InputStream in = session.getInputStream();
 
 						ByteArrayOutputStream out = new ByteArrayOutputStream();

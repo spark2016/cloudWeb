@@ -39,15 +39,9 @@ object Main {
     result += "\"pagerank\": \"" + socialInfo + "\"}\n";
 
     println(result)
-
-    // 3. yarn
-    val path = "/home/spark/project/result.dat"
-    // 3. local
-//    val path = "/Users/lynn/Desktop/result.dat"
-
-    val fos = new FileOutputStream(path);
-    fos.write(result.getBytes);
-    fos.close();
+    
+    var tempFile: RDD[String] = sc.makeRDD(List(result))
+    tempFile.repartition(1).saveAsTextFile("hdfs://spark1:9000/weibo/result.dat")
 
     println("Succeed!");
     sc.stop()
