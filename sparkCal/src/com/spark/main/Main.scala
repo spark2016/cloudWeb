@@ -59,6 +59,7 @@ object Main {
     val articles_filter =  articles.filter(a => (a.split('\t').length > 2 && a.split('\t')(1) == userId));
     var res = ""
     TFIDF.getKeywords(articles_filter.collect().mkString, 5).foreach(e=>res=res+"<br/>"+e._1)
+    println("this is the interst info: " + res)
     res
   }
   def getBasic(userId: String,sc: SparkContext)= {
@@ -80,13 +81,31 @@ object Main {
     val relationFile = "hdfs://spark1:9000/weibo/relation.txt"
     //load graph
     val graph = GraphLoader.edgeListFile(sc, relationFile)
-    //Calculate page rank and save the result to VertexRDD
-    val ranks = graph.pageRank(0.1).vertices
-    val result = ranks.filter(text=>(text.toString.contains(userId)))
-    val group = LabelPropagation.run(graph, 1)
-    println(group.vertices.first())
-    println(group.edges.first())
-    result.first()
+    //Calculate page rank and save the result to the file
+    /*    
+     *  val ranks = graph.pageRank(0.1).vertices
+     *  val result = ranks.filter(text=>(text.toString.contains(userId)))
+     *  val allranks = ranks.collect().mkString("\n")
+     *  println("this is all of the ranks:")
+     *  val path = "/Users/baiyilin/Desktop/pagerank.dat"
+     *  val fos = new FileOutputStream(path);
+     *  fos.write(allranks.getBytes);
+     *  fos.close();
+     */
+
+     //7. yarn
+    val articles: RDD[String] = sc.textFile("hdfs://spark1:9000/pagerank.txt")
+    val articles_filter =  articles.filter(a => a.split(',')(0) == userId);
+    val res = articles_filter.collect().mkString
+    var pagerank = ""
+    pagerank =  res.split(',')(1)
+    val groupGraph = LabelPropagation.run(graph, 3)
+    val community = groupGraph.vertices.groupBy(_._2).filter(_._1.toString.contains(userId));
+    
+    println("this is the output of community test:" + community.first());
+    var ret = ""
+    ret = "pagerank: " + pagerank + "<br/>" + "community: "+ community.first() 
+    ret
   }
 
 }
