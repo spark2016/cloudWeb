@@ -38,7 +38,7 @@ object Main {
     result += "\"interests\": \"" + interest + "\", ";
     result += "\"pagerank\": \"" + socialInfo + "\"}\n";
 
-    println(result);
+    println(result)
 
     // 3. yarn
     val path = "/home/spark/project/result.dat"
@@ -95,16 +95,31 @@ object Main {
 
      //7. yarn
     val articles: RDD[String] = sc.textFile("hdfs://spark1:9000/pagerank.txt")
-    val articles_filter =  articles.filter(a => a.split(',')(0) == userId);
+    val articles_filter =  articles.filter(a => a.split(',')(0) == userId)
     val res = articles_filter.collect().mkString
     var pagerank = ""
+    var ret = ""
     pagerank =  res.split(',')(1)
     val groupGraph = LabelPropagation.run(graph, 3)
-    val community = groupGraph.vertices.groupBy(_._2).filter(_._1.toString.contains(userId));
-    
-    println("this is the output of community test:" + community.first());
-    var ret = ""
-    ret = "pagerank: " + pagerank + "<br/>" + "community: "+ community.first() 
+    val user = groupGraph.vertices.filter(_._1.toString().contains(userId))
+    val label = user.first()._2
+    val groups = groupGraph.vertices.groupBy(_._2)
+    val members = groups.filter{case(key, _) => key == label}.values.flatMap(i => i.toList).collect()
+    val community = members.map(a=>a._1)
+    var result=""
+
+    if(community.length > 5){
+      for(i <- 1 to 5) {
+        result += community(i)
+        result += "<br/>"
+      }
+    }else{
+      for(i <- 1 to community.length-1) {
+        result =result +community(i)
+        result += "<br/>"
+      }
+    }  
+    ret = "pagerank: " + pagerank + "<br/>" + "label: "+ label + "<br/>" + "community members: "+ result
     ret
   }
 

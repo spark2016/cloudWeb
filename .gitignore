@@ -1,4 +1,4 @@
 .DS_Store
 pom.properties
 *.class
-.cache_main
+.cache-main
