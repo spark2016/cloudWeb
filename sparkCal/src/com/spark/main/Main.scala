@@ -115,8 +115,8 @@ object Main {
   }
   def getProfess(userId: String,sc: SparkContext)= {
     val zhihuFile: RDD[String] = sc.textFile("hdfs://spark1:9000/weibo/users.dat")
-    val zhihuFile_has_weibo = zhihuFile.filter(a => (a.split('\t').length > 2 && a.split('\t')(11) != "无"))
-    println (zhihuFile_has_weibo.collect().mkString)
+    val zhihuFile_has_weibo = zhihuFile.filter(a => (a.split('\t').length > 11 && a.split('\t')(11) != "无"))
+    // println (zhihuFile_has_weibo.collect().mkString)
     val weibo_url =  zhihuFile_has_weibo.filter(a => (a.split('\t')(11).split("/").length == 5 && a.split('\t')(11).split("/")(4) == userId))
     val res = weibo_url.collect().mkString
     println(res)
