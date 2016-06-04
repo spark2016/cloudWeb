@@ -138,19 +138,19 @@
     <div class="content">
         <div class="user_head_img"></div>
         <div class="user_base info">
-            <div class="title">基本信息</div>
+            <div class="title">Basic Information</div>
             <div class="text_content"></div>
         </div>
         <div class="user_hobit info">
-            <div class="title">兴趣爱好</div>
+            <div class="title">Interest Information</div>
             <div class="text_content"></div>
         </div>
         <div class="user_profess info">
-            <div class="title">用户职业</div>
+            <div class="title">Professional Information</div>
             <div class="text_content"></div>
         </div>
         <div class="user_pagerank info">
-            <div class="title">pagerank</div>
+            <div class="title">Social Network Information</div>
             <div class="text_content"></div>
         </div>
     </div>

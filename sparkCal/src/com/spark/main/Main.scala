@@ -53,7 +53,7 @@ object Main {
     
     val articles_filter =  articles.filter(a => (a.split('\t').length > 2 && a.split('\t')(1) == userId));
     var res = ""
-    TFIDF.getKeywords(articles_filter.collect().mkString, 5).foreach(e=>res=res+"<br/>"+e._1)
+    TFIDF.getKeywords(articles_filter.collect().mkString, 5).foreach(e=>res=res+e._1 + "<br/>")
     println("this is the interst info: " + res)
     res
   }
@@ -63,7 +63,7 @@ object Main {
        val articles_filter =  articles.filter(a => (a.split('\t').length > 2 && a.split('\t')(0) == userId));
        val res = articles_filter.collect().mkString
        var basicInfo = ""
-       basicInfo =  "<br/>" + res.split('\t')(1) + "<br/>" + res.split('\t')(2) + "<br/>"+res.split('\t')(3) + "<br/>"+ (if (res.split('\t')(6) == "f") '男' else '女')
+       basicInfo = res.split('\t')(1) + "<br/>" + res.split('\t')(2) + "<br/>"+res.split('\t')(3) + "<br/>"+ (if (res.split('\t')(6) == "f") '男' else '女')
        println("this is the info of basic " + basicInfo)
        basicInfo
   }
@@ -102,12 +102,12 @@ object Main {
     if(community.length > 5){
       for(i <- 1 to 5) {
         result += community(i)
-        result += "<br/>"
+        result += ";"
       }
     }else{
       for(i <- 1 to community.length-1) {
         result =result +community(i)
-        result += "<br/>"
+        result += ";"
       }
     }  
     ret = "pagerank: " + pagerank + "<br/>" + "label: "+ label + "<br/>" + "community members: "+ result
@@ -121,7 +121,7 @@ object Main {
     val res = weibo_url.collect().mkString
     println(res)
     var professInfo = ""
-    professInfo =  "<br/>" + res.split('\t')(7) +"<br/>" + res.split('\t')(8)+"<br/>" + res.split('\t')(9)
+    professInfo = res.split('\t')(7) +"<br/>" + res.split('\t')(8)+"<br/>" + res.split('\t')(9)
     println("this is the info of profess" + professInfo)
     professInfo
   }
