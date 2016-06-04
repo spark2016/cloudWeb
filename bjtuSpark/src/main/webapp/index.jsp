@@ -202,10 +202,10 @@
                     });
 
                     //设置各个信息域的内容
-                    $(".user_base .text_content").append("baseInfo"+'<br>'+text.baseInfo);
-                    $(".user_hobit .text_content").append("interests"+'<br>'+text.interests);
-                    $(".user_profess .text_content").append("profession"+'<br>'+text.profession);
-                    $(".user_pagerank .text_content").append("pagerank"+'<br>'+text.pagerank);
+                    $(".user_base .text_content").append(text.baseInfo);
+                    $(".user_hobit .text_content").append(text.interests);
+                    $(".user_profess .text_content").append(text.profession);
+                    $(".user_pagerank .text_content").append(text.pagerank);
                     //依次显示各个信息域
                     $(".user_base").removeClass("reset");
                     $(".user_base").addClass("lefttop");

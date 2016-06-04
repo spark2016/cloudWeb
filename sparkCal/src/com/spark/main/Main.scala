@@ -99,8 +99,8 @@ object Main {
     val community = members.map(a=>a._1)
     var result=""
 
-    if(community.length > 5){
-      for(i <- 1 to 5) {
+    if(community.length > 3){
+      for(i <- 1 to 3) {
         result += community(i)
         result += ";"
       }
