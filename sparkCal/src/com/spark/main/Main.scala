@@ -30,11 +30,12 @@ object Main {
     val baseInfo = getBasic(userId,sc)
     val interest = getInterest(userId,sc)
     val socialInfo = getSocial(userId,sc)
+    val professInfo = getProfess(userId,sc)
 
     var result : String = "";
     result += "{\"id\": \"" + userId + "\", ";
     result += "\"baseInfo\": \"" + baseInfo + "\", ";
-    result += "\"profession\": \"" + "test" + "\", ";
+    result += "\"profession\": \"" + professInfo + "\", ";
     result += "\"interests\": \"" + interest + "\", ";
     result += "\"pagerank\": \"" + socialInfo + "\"}\n";
 
@@ -63,16 +64,12 @@ object Main {
        val res = articles_filter.collect().mkString
        var basicInfo = ""
        basicInfo =  "<br/>" + res.split('\t')(1) + "<br/>" + res.split('\t')(2) + "<br/>"+res.split('\t')(3) + "<br/>"+ (if (res.split('\t')(6) == "f") '男' else '女')
-       var professInfo = ""
-//       TFIDF.getKeywords(res.split('\t')(12), 3).foreach(e=>professInfo=professInfo+"<br/>"+e._1)
-       // 11387	左琼	广东	广州	2009-08-27 16:00:00	2012-04-05 09:38:16	f	1	367	1858	6332	http://blog.sina.com.cn/zq4387	用你的毛，织我的脖！
        println("this is the info of basic " + basicInfo)
-//       println("this is the info of profess " + professInfo)
        basicInfo
   }
   def getSocial(userId: String,sc: SparkContext) = {
     // 6. yarn
-    val relationFile = "hdfs://spark1:9000/weibo/relation.txt"
+    val relationFile = "hdfs://spark1:9000/weibo/relation1.txt"
     //load graph
     val graph = GraphLoader.edgeListFile(sc, relationFile)
     //Calculate page rank and save the result to the file
@@ -116,5 +113,16 @@ object Main {
     ret = "pagerank: " + pagerank + "<br/>" + "label: "+ label + "<br/>" + "community members: "+ result
     ret
   }
-
+  def getProfess(userId: String,sc: SparkContext)= {
+    val zhihuFile: RDD[String] = sc.textFile("hdfs://spark1:9000/weibo/users.dat")
+    val zhihuFile_has_weibo = zhihuFile.filter(a => (a.split('\t').length > 2 && a.split('\t')(11) != "无"))
+    println (zhihuFile_has_weibo.collect().mkString)
+    val weibo_url =  zhihuFile_has_weibo.filter(a => (a.split('\t')(11).split("/").length == 5 && a.split('\t')(11).split("/")(4) == userId))
+    val res = weibo_url.collect().mkString
+    println(res)
+    var professInfo = ""
+    professInfo =  "<br/>" + res.split('\t')(7) +"<br/>" + res.split('\t')(8)+"<br/>" + res.split('\t')(9)
+    println("this is the info of profess" + professInfo)
+    professInfo
+  }
 }
